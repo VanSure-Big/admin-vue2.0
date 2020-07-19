@@ -1,0 +1,24 @@
+.el-submenu .el-menu-item{
+  font-size: 14px;
+  padding-left: 50px !important;
+  &.is-active{ background-color: $subColor !important; }
+
+}
+// li.el-submenu {
+//   &.is-active.is-opened .el-submenu__title { background-color: $mainColor !important; }
+// }
+.close {
+  .el-menu--collapse.el-menu::before{
+    .el-submenu.is-opened{
+      // background-color: red !important;
+      .el-submenu__title {
+        background-color: red !important;
+      }
+    }
+  }
+}
+.el-menu--vertical {
+  .el-menu-item:hover{
+    background-color: $subColor !important;
+  }
+}

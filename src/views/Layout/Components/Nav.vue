@@ -28,19 +28,16 @@
 import { reactive, ref, onMounted, computed} from "@vue/composition-api";
 export default {
   name: "navMuen",
-  setup(props, context) {
+  setup(props, { root }) {
     /**
      * 声明data数据
      */
-    // const isCollapse = ref(false);
     //获取routes
-    const routers = reactive(context.root.$router.options.routes)
-    console.log(routers);
+    const routers = reactive(root.$router.options.routes)
     /**
      * 计算属性
      */
-    const isCollapse = computed(() => context.root.$store.state.app.isCollapse);
-    
+    const isCollapse = computed(() => root.$store.state.app.isCollapse);
     /**
      * 声明函数
      */
@@ -56,7 +53,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .logo {
   text-align: center;
   padding: 25px 0;

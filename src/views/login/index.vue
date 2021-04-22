@@ -29,7 +29,7 @@
 
         <el-form-item prop="checkPass" class="item-from">
           <label>密码</label>
-          <el-input type="text" v-model="ruleForm.checkPass" autocomplete="off">
+          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off">
           </el-input>
         </el-form-item>
 
@@ -49,10 +49,11 @@
 
         <el-form-item prop="code" class="item-from">
           <label>验证码</label>
-          <el-row :gutter="11">
+          <el-row :gutter="22">
             <el-col :span="15">
               <el-input v-model="ruleForm.code"></el-input>
             </el-col>
+
             <el-col :span="9">
               <el-button
                 type="success"
@@ -87,7 +88,6 @@
 import { reactive, ref, onMounted } from "@vue/composition-api";
 //sha1加密
 import sha1 from "js-sha1";
-// import { GetSms, Register, Login } from "@/api/login";
 import {
   stripscript,
   validatePassword,
@@ -221,9 +221,6 @@ export default {
         root.$message.error("邮箱格式有误,请重新输入!");
         return false;
       }
-      //修改验证码按钮状态
-      codeButton.status = true;
-      codeButton.text = "发送中";
       //调用定时器,倒计时
       countDown(11);
       //传入参数
@@ -232,7 +229,7 @@ export default {
         module: model.value
       };
       //在vuex requestData.js请求接或者  GetSms(requestData)
-      root.$store.dispatch("getSms/getSms", requestData).then(response => {
+      root.$store.dispatch("login/getSms", requestData).then(response => {
           let data = response.data;
           root.$message({
             message: data.message,
@@ -287,7 +284,7 @@ export default {
             message: data.message,
             type: "success"
           });
-          console.log(response);
+          console.log("登陆成功");
           //执行成功后清除定时器
           clearCountDown();
           //跳转页面
@@ -314,7 +311,7 @@ export default {
         module: "/register/"
       };
       //在vuex register.js调用注册接口 或者 Register(registerData)
-      root.$store.dispatch("register/register", registerData).then(response => {
+      root.$store.dispatch("login/register", registerData).then(response => {
           let data = response.data;
           root.$message({
             message: data.message,
@@ -370,11 +367,16 @@ export default {
             status: false,
             text: "再次获取"
           });
+          
         } else {
+          console.log(time);
           //改变按钮值
-          codeButton.text = `再次获取(${time}s)`;
+          updataCodeButton({
+            status: true,
+            text: `再次获取(${time}s)`
+          });
         }
-        console.log(time);
+
       }, 1000);
     };
 

@@ -19,3 +19,20 @@ $subColor: #f56c6c;
   -ms-#{$type}: $value;
   #{$type}: $value;
 }
+@mixin labelCss ($float, $width, $text-align, $line-height: "normal"){
+  label {
+    float: $float;
+    width: $width + px;
+    line-height: $line-height + px;
+    text-align: $text-align;
+  }
+  .warp-content {
+    margin-left: $width + px;
+  }
+}
+@mixin elButton ($float, $width, $height) {
+  float: $float;
+  width: $width + px;
+  height: $height + px;
+  padding: 0;
+}

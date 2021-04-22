@@ -1,8 +1,8 @@
 const state = {
   isCollapse: JSON.parse(sessionStorage.getItem('isCollapse')) || false
 };
-const getters = {
-  isCollapse: state => state.isCollapse
+const getters = { // 这里用state的值做计算才会使用
+  // isCollapse: state => state.isCollapse
 };
 const mutations = {  // 同步 没有回调处理事情
   //state必须传，可以不传value

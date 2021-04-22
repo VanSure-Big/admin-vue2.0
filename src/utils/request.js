@@ -1,10 +1,11 @@
 import axios from "axios";
 import { Message } from "element-ui";
+import { getToKen, getuserName } from "./app";
 /**
  * 拦截器
  */
 //创建 BASEURL匹配环境变量下的api地址
-const BASEURL = process.env.NODE_ENV === "production" ? "" : "/devApi"; //判断是生产环境还是开发环境,此时是开发环境
+const BASEURL = process.env.NODE_ENV === "production" ? process.env.VUE_APP_API : process.env.VUE_APP_API; //判断是生产环境还是开发环境,此时是开发环境
 //创建axios，赋给变量service
 const service = axios.create({
   baseURL: BASEURL, //http://localhost:8080/devApi == http://www.web-jshtml.cn/productapi/devApi
@@ -15,7 +16,9 @@ const service = axios.create({
  * 请求拦截器(请求接口前，做一些数据处理)
  */
 service.interceptors.request.use(
-  function(config) {
+  function (config) {
+    config.headers['Tokey'] = getToKen();
+    config.headers['Username'] = getuserName();
     // 在发送请求之前做些什么
     return config;
   },

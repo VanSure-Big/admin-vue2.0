@@ -40,6 +40,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .svg-icon {
+  padding: 10px;
   width: 1em;
   height: 1em;
   font-size: 18px;

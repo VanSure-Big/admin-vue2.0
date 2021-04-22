@@ -8,9 +8,25 @@
         <img src="@/assets/portrait.jpg" alt="">
       </div>
       <div class="pull-left user-name">
-        管理员
+        {{userName}}
       </div>
-      <div class="pull-left header-icon"><svg-icon iconName="quit" className="quit"></svg-icon></div>
+    <!-- <el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button> -->
+      <div class="pull-left header-icon" @click="centerDialogVisible = true">
+        <svg-icon iconName="exit" className="exit"></svg-icon>
+      </div>
+      <!-- 退出框 -->
+      <el-dialog
+      title="提示"
+      append-to-body
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <span>确定退出?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exit">确 定</el-button>
+      </span>
+    </el-dialog>
     </div>
     <div>
 
@@ -18,20 +34,40 @@
   </div>
 </template>
 <script>
+import { reactive, ref, onMounted, computed} from "@vue/composition-api";
+import { removeToKen, removeuserName } from "@/utils/app";
 export default {
   name: "layoutHeader",
   setup(porps, {root}){
+    const centerDialogVisible = ref(false);
+    //从vuex中获取username
+    const userName = root.$store.state.login.userName;
     const navMenuState = ()=> {
       //commit方法是在vue实例中调用vuex中mutations方法用来改变state.isCollapse的值
       root.$store.commit("app/SET_COLLAPSE")
-    } 
+      console.log(root.$store.state.login.toKen);
+      console.log(root.$store.state.login.userName);
+    };
+    //退出
+    const exit = ()=> {
+      //dispatch方法是在vue实例中调用vuex中actions里定义的方法
+      root.$store.dispatch("login/exit").then(()=>{
+        root.$router.push({
+          name: "Login"
+        })
+      })
+
+    }
     return {
-      navMenuState
+      navMenuState,
+      userName,
+      exit,
+      centerDialogVisible
     }
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 #header-wrap {
   z-index: 1;
   position: fixed;
@@ -58,20 +94,23 @@ export default {
 }
 .header-icon {
   padding: 0 32px;
+  cursor: pointer;
   svg {
-    fill: black;
+    color: black !important;
+    fill: currentColor;
     font-size: 22px;
     text-align: center;
     vertical-align: middle;
-    cursor: pointer;
   }
 }
 .user-name {
   height: 100%;
   border-right: 2px solid #ededed;
   padding: 0 25px;
+  cursor: pointer;
   }
 .portrait-img {
+  cursor: pointer;
   margin: 10px auto;
   line-height: $layoutHeader;
   height: 50px;

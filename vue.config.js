@@ -10,6 +10,7 @@ module.exports = {
    * webpack配置,see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
    **/
   chainWebpack: config => {
+    //配置svg
     const svgRule = config.module.rule("svg");
     svgRule.uses.clear();
     svgRule
@@ -77,7 +78,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       '/devApi': {
-        target: 'http://www.web-jshtml.cn/productapi', //API服务器的地址   http://www.web-jshtml.cn/api
+        target: 'http://www.web-jshtml.cn/productapi/token', //API服务器的地址   http://www.web-jshtml.cn/api
         changeOrigin: true,
         pathRewrite: {
           '^/devApi': ''

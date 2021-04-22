@@ -3,8 +3,6 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 import app from "./modules/app";
 import login from "./modules/login";
-import register from "./modules/register";
-import getSms from "./modules/getSms";
 //这里用了模块化处理方法vue实例需要调用方法和值时需要加上模块名称例如 context.root.$store.state.app.isCollapse&&app/SET_COLLAPSE
 export default new Vuex.Store({
   state: {},
@@ -16,8 +14,6 @@ export default new Vuex.Store({
   // 模块化处理数据
   modules: {
     app,
-    login,
-    register,
-    getSms
+    login
   }
 });
